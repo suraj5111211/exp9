@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Clock</title>
+    <link rel="manifest" href="manifest.webmanifest">
+  </head>
+  <body>
+    <div class="clock">
+      <div class="numbers">
+        <div class="twelve">12</div>
+        <div class="three">3</div>
+        <div class="six">6</div>
+        <div class="nine">9</div>
+      </div>
+      <div class="arrows">
+        <div class="hour"></div>
+        <div class="minute"></div>
+        <div class="second"></div>
+      </div>
+      <img
+        src="https://upload.wikimedia.org/wikipedia/en/thumb/9/95/Rolex_logo.svg/1200px-Rolex_logo.svg.png"
+        alt=""
+      />
+    </div>
+    <script src="index.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' })
+            .then((registration) => {
+                console.log('ServiceWorker registration successful with scope:', registration.scope);
+            })
+            .catch((err) => {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+    });
+}
+    </script>
+    <script>
+      if(
+    'serviceWorker' in navigator
+    ){
+    window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/sw.js',{scope:"/"}).then(function(registration){
+    console.log('Service worker registration successfull with scope:', registration.scope);
+    },function(err){
+    console.log('Service worker registration failed: ', err);
+    });
+    })
+    }
+    var CACHE_NAME = 'my-site-cache-v1';
+    var urlsToCache = [
+    '/',
+    'index.html',
+];
+self.addEventListener('install',function(event){
+event.waitUntil(
+caches.open(CACHE_NAME)
+.then(function(cache){
+console.log('Opened Cache');
+return cache.addAll(urlsToCache);
+})
+)
+});
+    </script>
+  </body>
+</html>
